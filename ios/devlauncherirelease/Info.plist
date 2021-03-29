@@ -63,6 +63,12 @@
 					<string>withdevlauncher</string>
 				</array>
 			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>expo-dev-menu</string>
+				</array>
+			</dict>
 		</array>
 	</dict>
 </plist>
