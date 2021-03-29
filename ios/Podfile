@@ -4,21 +4,70 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
-target 'devlauncherirelease' do
+abstract_target 'devlauncherirelease-abstract' do
   use_unimodules!
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
-
-  pod 'expo-dev-menu', path: '../node_modules/expo-dev-menu', :configurations => :debug
-  pod 'expo-dev-launcher', path: '../node_modules/expo-dev-launcher', :configurations => :debug
+    
+  release_schemes = ["devlauncherirelease"]
   
-  # Enables Flipper.
-  #
-  # Note that if you have use_frameworks! enabled, Flipper will not work and
-  # you should disable these next few lines.
-  use_flipper!
   post_install do |installer|
-    flipper_post_install(installer)
+    ShellScriptActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction"
+    file_name = Dir.glob("*.xcodeproj")[0]
+    app_project = Xcodeproj::Project.open(file_name)
+
+    Xcodeproj::Project.schemes(app_project.path).each do |scheme_name|
+      scheme_dir_path = Xcodeproj::XCScheme.shared_data_dir(app_project.path)
+      scheme_path = "#{scheme_dir_path}/#{scheme_name}.xcscheme"
+      scheme = Xcodeproj::XCScheme.new(scheme_path)
+      build_action = scheme.build_action
+
+      pre_actions = build_action.xml_element.elements['PreActions'] || build_action.xml_element.add_element('PreActions')
+      hasDevLauncherAction = pre_actions.get_elements('ExecutionAction').any? { |action| action.attributes['ActionType'] == ShellScriptActionType && action.elements["ActionContent"]&.attributes['title'] == "DevLauncher - v. 0.3" }
+      if !hasDevLauncherAction
+        puts "Adding pre-build script to scheme #{scheme_name}."
+
+        desire_value = 1
+        if release_schemes.include? scheme_name
+          desire_value = 0
+        end
+        
+        @xml_element = REXML::Element.new("ExecutionAction")
+        @xml_element.attributes['ActionType'] = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction"
+        action = @xml_element.add_element("ActionContent")
+        action.attributes['scriptText'] = "$SRCROOT/run.sh #{desire_value} $SRCROOT"
+        action.attributes['title'] = 'DevLauncher - v. 0.3'
+
+        pre_actions.add_element(@xml_element)
+    
+        scheme.save!
+      else 
+        puts "Scheme #{scheme_name} contains pre-build script."
+      end
+    end
+
+    app_project.save
+    
+    installer.target_installation_results.pod_target_installation_results.each do |pod_name, target_installation_result|
+      target_installation_result.native_target.build_configurations.each do |config|
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << "RCT_DEBUG=${EX_DEV_LAUNCHER_FORCE_DEBUG_TOOLS}"
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << "RCT_DEV=${EX_DEV_LAUNCHER_FORCE_DEBUG_TOOLS}"
+      end
+    end
   end
+
+  target 'devlauncherirelease' do
+    pod 'expo-dev-menu', path: '../node_modules/expo-dev-menu', configurations: :debug
+    pod 'expo-dev-launcher', path: '../node_modules/expo-dev-launcher', configurations: :debug
+  end
+
+  target 'devlauncherireleaseWithDevLauncher' do
+    pod 'expo-dev-menu', path: '../node_modules/expo-dev-menu'
+    pod 'expo-dev-launcher', path: '../node_modules/expo-dev-launcher'
+  end
+
+
+  
 end

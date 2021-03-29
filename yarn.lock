@@ -3628,22 +3628,22 @@ expo-constants@10.0.1, expo-constants@~9.3.0, expo-constants@~9.3.3:
     "@expo/config" "^3.3.18"
     uuid "^3.3.2"
 
-expo-dev-launcher@0.2.0:
+expo-dev-launcher@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-0.3.0.tgz#0bf80cd242ce43924b47cf54145a6d1a5de814b1"
+  integrity sha512-b17VRNUFs2ul+deW1+tP/60+aboQDkyF0H+/buDiwr+sDI/UBwohjCFP0oAiW+Il7ZY5ZlO4m28i9ICj64nLUw==
+
+expo-dev-menu-interface@0.2.0:
   version "0.2.0"
-  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-0.2.0.tgz#827bc93329ab3185ace318a5c01ce28b265da11c"
-  integrity sha512-seGUvL2ruDtXTuMK/MxUBIv0PutbSyJ0tm69g1+KgBD0ltv1j7ZYauHwnHvqh68seX/H5hwg9UhZAK00sOP9xQ==
+  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-0.2.0.tgz#e9196d204fdf2d8009df48ada7295fd73f495171"
+  integrity sha512-Pp5214YXsA34d1hVGhQ1nv58RZgshUWgMNsSZonJGDS+v38UPVmBAi4GyikktZ1adfDkTTbY/uoUY0ZDG8sS6A==
 
-expo-dev-menu-interface@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-0.1.2.tgz#4aa15570257d864a23137f131f673a79d6396beb"
-  integrity sha512-M+2xgObOZIRyFGaix4FUx0wcSthibPFm7psZdtp1tjZg0AwdsKc8VN2rCDE2332+jDZTgl7pwaHXIeFt9M4bhA==
-
-expo-dev-menu@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-0.3.1.tgz#eb56465c94aa01541c818b2abdac64463674c082"
-  integrity sha512-E9yoe+oZsQjHys89HYPEgCo6t5DHk7V2mHzUgEisOlGPFVLjL25//9wcIPiU5TSMX6nRSeX5zCR0/LdE9yUSEg==
+expo-dev-menu@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-0.4.0.tgz#8100cb28c544298a263d22431d033231eb5afa86"
+  integrity sha512-OR5g178PZuQAw9C7R1Ke4/KrdsaJO3Ti+O68YRu9LnAp4liZDhjJaSGWvST7NX1jq/IkHCrxzvOhUiVUlrycdg==
   dependencies:
-    expo-dev-menu-interface "0.1.2"
+    expo-dev-menu-interface "0.2.0"
 
 expo-error-recovery@~1.4.0:
   version "1.4.0"

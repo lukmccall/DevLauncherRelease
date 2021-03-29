@@ -19,25 +19,6 @@
 #include <EXDevLauncher/EXDevLauncherController.h>
 #endif
 
-#ifdef FB_SONARKIT_ENABLED
-#import <FlipperKit/FlipperClient.h>
-#import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
-#import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
-#import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
-#import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
-#import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-
-static void InitializeFlipper(UIApplication *application) {
-  FlipperClient *client = [FlipperClient sharedClient];
-  SKDescriptorMapper *layoutDescriptorMapper = [[SKDescriptorMapper alloc] initWithDefaults];
-  [client addPlugin:[[FlipperKitLayoutPlugin alloc] initWithRootNode:application withDescriptorMapper:layoutDescriptorMapper]];
-  [client addPlugin:[[FKUserDefaultsPlugin alloc] initWithSuiteName:nil]];
-  [client addPlugin:[FlipperKitReactPlugin new]];
-  [client addPlugin:[[FlipperKitNetworkPlugin alloc] initWithNetworkAdapter:[SKIOSNetworkAdapter new]]];
-  [client start];
-}
-#endif
-
 @interface AppDelegate () <RCTBridgeDelegate>
 
 @property (nonatomic, strong) UMModuleRegistryAdapter *moduleRegistryAdapter;
@@ -50,24 +31,16 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#ifdef FB_SONARKIT_ENABLED
-  InitializeFlipper(application);
-#endif
 
   self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];  
   self.launchOptions = launchOptions;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  #ifdef DEBUG
-    #if defined(EX_DEV_LAUNCHER_ENABLED)
-      EXDevLauncherController *contoller = [EXDevLauncherController sharedInstance];
-      [contoller startWithWindow:self.window delegate:self launchOptions:launchOptions];
-    #else
-      [self initializeReactNativeApp];
-    #endif
+  
+  #if defined(EX_DEV_LAUNCHER_ENABLED)
+    EXDevLauncherController *contoller = [EXDevLauncherController sharedInstance];
+    [contoller startWithWindow:self.window delegate:self launchOptions:launchOptions];
   #else
-    EXUpdatesAppController *controller = [EXUpdatesAppController sharedInstance];
-    controller.delegate = self;
-    [controller startAndShowLaunchScreen:self.window];
+    [self initializeReactNativeApp];
   #endif
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
@@ -86,9 +59,6 @@ static void InitializeFlipper(UIApplication *application) {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"main" initialProperties:nil];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
   
-#if defined(EX_DEV_MENU_ENABLED)
-  [DevMenuManager configureWithBridge:bridge];
-#endif
   
   self.rootViewController = [UIViewController new];
   self.rootViewController.view = rootView;
@@ -106,14 +76,10 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
-#ifdef DEBUG
-  #if defined(EX_DEV_LAUNCHER_ENABLED)
-    return [[EXDevLauncherController sharedInstance] sourceUrl];
-  #else
-    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-  #endif
+#if defined(EX_DEV_LAUNCHER_ENABLED)
+  return [[EXDevLauncherController sharedInstance] sourceUrl];
 #else
-  return [[EXUpdatesAppController sharedInstance] launchAssetUrl];
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #endif
 }
 

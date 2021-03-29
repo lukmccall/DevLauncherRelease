@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1130"
-   version = "1.3">
+   LastUpgradeVersion = "1240"
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "DevLauncher - v. 0.3"
+               scriptText = "$SRCROOT/run.sh 1 $SRCROOT&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "B2154BD026125F1000AC8898"
+                     BuildableName = "devlauncherireleaseWithDevLauncher.app"
+                     BlueprintName = "devlauncherireleaseWithDevLauncher"
+                     ReferencedContainer = "container:devlauncherirelease.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,9 +32,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "devlauncherirelease.app"
-               BlueprintName = "devlauncherirelease"
+               BlueprintIdentifier = "B2154BD026125F1000AC8898"
+               BuildableName = "devlauncherireleaseWithDevLauncher.app"
+               BlueprintName = "devlauncherireleaseWithDevLauncher"
                ReferencedContainer = "container:devlauncherirelease.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,16 +46,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "devlauncherireleaseTests.xctest"
-               BlueprintName = "devlauncherireleaseTests"
-               ReferencedContainer = "container:devlauncherirelease.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -54,9 +62,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "devlauncherirelease.app"
-            BlueprintName = "devlauncherirelease"
+            BlueprintIdentifier = "B2154BD026125F1000AC8898"
+            BuildableName = "devlauncherireleaseWithDevLauncher.app"
+            BlueprintName = "devlauncherireleaseWithDevLauncher"
             ReferencedContainer = "container:devlauncherirelease.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,9 +79,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "devlauncherirelease.app"
-            BlueprintName = "devlauncherirelease"
+            BlueprintIdentifier = "B2154BD026125F1000AC8898"
+            BuildableName = "devlauncherireleaseWithDevLauncher.app"
+            BlueprintName = "devlauncherireleaseWithDevLauncher"
             ReferencedContainer = "container:devlauncherirelease.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,7 +90,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
